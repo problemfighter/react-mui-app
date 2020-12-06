@@ -1,0 +1,13 @@
+= React Material UI Application (RMA)
+
+This Boilerplate will help you to start quick development of Application UI with React & Material UI
+
+
+{blank} +
+
+== How to start Project?
+
+. Make sure you have node installed. https://nodejs.org/en/  (LTS is recommanded)
+. Make sure you have Git installed in your pc https://git-scm.com/downloads
+. In your PC, which place you prefered to store the code, go there and open terminal or Git Bash
+. Run this command from your terminal or git bash : `` curl https://raw.githubusercontent.com/problemfighter/react-mui-app/master/bismillah.sh -o bismillah.sh && bash bismillah.sh``
