@@ -1,0 +1,52 @@
+{
+  "name": "react-material-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.3",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-select": "^3.0.8",
+    "@types/recharts": "^1.8.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-mui-ui": "^0.1.0",
+    "react-scripts": "^3.0.1",
+    "react-select": "^3.0.8",
+    "recharts": "^1.8.5",
+    "tm-react": "^0.1.0",
+    "typescript": "3.5.3"
+  },
+  "scripts": {
+    "start-rma": "webpack-dev-server",
+    "build": "webpack"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.9",
+    "classnames": "^2.2.6",
+    "file-loader": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "ts-loader": "^6.0.4",
+    "webpack": "^4.35.3",
+    "webpack-async-chunk-names-plugin": "^0.1.1",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.1"
+  }
+}

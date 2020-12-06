@@ -9,6 +9,7 @@
   "private": true,
   "workspaces": [
     "dependency-source/*",
+    "ui/*",
     "application/module/*/ui/*"
   ],
   "scripts": {

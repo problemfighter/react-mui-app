@@ -1,2 +1,5 @@
 .idea
 /dependency-source
+node_modules
+*.lock
+*-lock.json
