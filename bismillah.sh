@@ -37,3 +37,6 @@ npm install -g yarn
 
 echo "Installing Dependency";
 yarn install
+
+cd ui/rma/data
+yarn install

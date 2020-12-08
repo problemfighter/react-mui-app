@@ -11,3 +11,8 @@ This Boilerplate will help you to start quick development of Application UI with
 . Make sure you have Git installed in your pc https://git-scm.com/downloads
 . In your PC, which place you prefered to store the code, go there and open terminal or Git Bash
 . Run this command from your terminal or git bash : `` curl https://raw.githubusercontent.com/problemfighter/react-mui-app/master/bismillah.sh -o bismillah.sh && bash bismillah.sh``
+
+
+== How to start the API Server
+. cd project-root/ui/rma/data
+. npm server.js
