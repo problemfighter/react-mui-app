@@ -15,4 +15,5 @@ This Boilerplate will help you to start quick development of Application UI with
 
 == How to start the API Server
 . cd project-root/ui/rma/data
+. yarn install
 . npm server.js
