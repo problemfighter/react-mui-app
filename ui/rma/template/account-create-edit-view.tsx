@@ -16,8 +16,6 @@ import {
     Grid,
     TextField
 } from "react-mui-ui/ui/ui-component";
-import TRReactSelect from "react-mui-ui/ui/tr-react-select";
-import {CommonData} from "bl-ui-common/src/data/common-data";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import UserUrlMapping from "react-material-app/src/view/user/user-url-mapping";
 
