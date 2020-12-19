@@ -26,7 +26,6 @@ export default class AppConfig extends TRAppConfig {
     }
 
     public isAuthorized (response?: TRHTTResponse): boolean {
-    return true;
         if (response && response.httpCode === 401){
             return false
         }

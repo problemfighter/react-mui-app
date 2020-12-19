@@ -36,9 +36,9 @@ class LoginView extends TRComponent<LoginUI, State> {
 
     constructor(props: LoginUI) {
         super(props);
-        this.addFormDefinition("email", new TrFormDefinitionData({
+        this.addFormDefinition("identifier", new TrFormDefinitionData({
             required: true,
-            errorMessage: "Please Enter Email Address",
+            errorMessage: "Please Enter Identifier",
         }));
         this.addFormDefinition("password", new TrFormDefinitionData({
             required: true,
@@ -56,7 +56,7 @@ class LoginView extends TRComponent<LoginUI, State> {
         event.preventDefault();
         const _this = this;
         if (!this.validateFormInput()) {
-            this.showErrorFlash("Please enter email or password");
+            this.showErrorFlash("Please enter identity or password");
         } else {
             this.postJsonToApi(ApiUrl.LOGIN_URL, this.state.formData,
                 {
@@ -87,7 +87,7 @@ class LoginView extends TRComponent<LoginUI, State> {
                         <Typography variant="h4">{AppMessage.loginLabel}</Typography>
                         <br/>
                         <form onSubmit={(event:any) => {this.doLogin(event)}} className={classes.form} noValidate>
-                            <TextField {...this.handleInputDataChange("email")} type="email" label="Email Address" margin="normal" fullWidth required/>
+                            <TextField {...this.handleInputDataChange("identifier")} type="email" label="Identifier" margin="normal" fullWidth required/>
                             <TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth required/>
                             <Button type="submit" variant="contained" fullWidth color="primary" children="Login" className={classes.submit}/>
                             <Grid container style={{marginTop:20}}>
