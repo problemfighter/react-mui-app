@@ -1,4 +1,7 @@
 PROJECT_NAME="react-mui-app"
+if [ "$#" -e 1 ]; then
+    PROJECT_NAME="$1"
+fi
 echo "Welcome to React Material UI Application (RMA)";
 echo "-------------------------------------------------------------"
 echo "-------------------------------------------------------------"
