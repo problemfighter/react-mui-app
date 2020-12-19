@@ -85,8 +85,8 @@ export const ApiUtil = {
 
     processApiResponseAndShowError: (response: TRHTTResponse, component: any) =>{
         let apiResponse = ApiUtil.processApiResponse(response, component);
-        if (apiResponse.status == AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message){
-            component.showErrorFlash(apiResponse.error.message);
+        if (apiResponse.status === AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message){
+            component.showErrorFlash(apiResponse.error.message.text);
             return null;
         }else{
             return apiResponse;
