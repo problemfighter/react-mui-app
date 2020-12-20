@@ -58,14 +58,14 @@ export const ApiUtil = {
     },
 
     processApiErrorResponse: (response: TRHTTResponse, component: any) =>{
-        if (!response.isSuccess && response.message) {
-            component.showErrorFlash(response.message);
+        if (response.status === AppConstant.STATUS_ERROR && response.error.message) {
+            component.showErrorFlash(response.error.message.text);
         } else {
             let message = AppMessage.unableToCommunicate;
-            if (response.responseData.message){
-                let data = response.responseData.message;
+            if (response.responseData.message.text){
+                let data = response.responseData.message.text;
                 if (typeof data === 'string' || data instanceof String){
-                    message = response.responseData.message;
+                    message = response.responseData.message.text;
                 }
             }
             component.showErrorFlash(message);
@@ -95,7 +95,7 @@ export const ApiUtil = {
     showErrorMessageOnApiDataProcess(responseData: any, component: any){
         if (responseData && responseData.status == AppConstant.STATUS_ERROR &&
             responseData.error && responseData.error.message) {
-            component.showErrorFlash(responseData.error.message)
+            component.showErrorFlash(responseData.error.message.text)
         }
     },
     processApiResponseError: (responseData: any, component: any) => {
