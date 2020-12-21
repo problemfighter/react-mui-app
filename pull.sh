@@ -1,6 +1,9 @@
 cd dependency-source/react-mui-ui
 git pull
-
-cd ..
-cd tm-react
+cd ../tm-react
+git pull
+cd ../..
+cd ui/iptv-ui
+git pull
+cd ../rma
 git pull
