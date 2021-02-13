@@ -11,7 +11,7 @@ This Boilerplate will help you to start quick development of Application UI with
 . Make sure you have Git installed in your pc https://git-scm.com/downloads
 . In your PC, which place you prefered to store the code, go there and open terminal or Git Bash
 . Run this command from your terminal or git bash : `` curl https://raw.githubusercontent.com/problemfighter/react-mui-app/master/bismillah.sh -o bismillah.sh && bash bismillah.sh``
-. If you not get error in your console then please go to the directory named **react-mui-app**. ``cd tm-react``
+. If you not get error in your console then please go to the directory named **react-mui-app**. ``cd react-mui-app``
 . Run the below command `yarn start-rma`
 . Browse the url : http://localhost:7861/
 
