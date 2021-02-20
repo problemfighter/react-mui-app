@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start-rma": "webpack-dev-server",
-    "build": "webpack"
+    "build-rma": "webpack"
   },
   "eslintConfig": {
     "extends": "react-app"
