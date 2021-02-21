@@ -9,7 +9,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', (req, res) => {
-    res.send('Bismillah')
+    res.send('Bismillah React Material UI Application Framework (RMA)')
 })
 
 app.all('/api/v1/authentication/login', (req, res, next) => {
