@@ -83,12 +83,15 @@ export const ApiUtil = {
         return Object.keys(obj).length === 0
     },
 
-    processApiResponseAndShowError: (response: TRHTTResponse, component: any) =>{
+    processApiResponseAndShowError: (response: TRHTTResponse, component: any) => {
         let apiResponse = ApiUtil.processApiResponse(response, component);
-        if (apiResponse.status === AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message){
+        if (apiResponse.status === AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message) {
             component.showErrorFlash(apiResponse.error.message.text);
             return null;
-        }else{
+        } else if (apiResponse.status === AppConstant.STATUS_ERROR && apiResponse.message) {
+            component.showErrorFlash(apiResponse.message);
+            return null;
+        } else {
             return apiResponse;
         }
     },
