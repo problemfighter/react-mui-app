@@ -51,7 +51,25 @@ TypeScript is a language for application-scale JavaScript. TypeScript adds optio
 axios ::
 Promise based HTTP client for the browser and node.js
 
-XXXXX ::
+react-router-dom ::
+Components are the heart of React's powerful, declarative programming model. React Router is a collection of navigational components that compose declaratively with your application.
+
+jss ::
+A lib for generating Style Sheets with JavaScript.
+
+classnames ::
+A simple JavaScript utility for conditionally joining classNames together.
+
+clsx ::
+A tiny (228B) utility for constructing className strings conditionally.
+
+recharts ::
+Recharts is a Redefined chart library built with React and D3.
+
+
+material-ui/core ::
+Material UI for React
+
 XXXXX ::
 XXXXX ::
 XXXXX ::

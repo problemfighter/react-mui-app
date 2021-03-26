@@ -7,13 +7,11 @@
     "@types/node": "^14.14.36",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
-    "@types/react-select": "^3.0.8",
     "@types/recharts": "^1.8.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-mui-ui": "^0.1.0",
     "react-scripts": "^4.0.3",
-    "react-select": "^3.0.8",
     "recharts": "^1.8.5",
     "tm-react": "^0.1.0",
     "typescript": "4.2.3"
@@ -40,13 +38,13 @@
   "devDependencies": {
     "@types/classnames": "^2.2.9",
     "classnames": "^2.2.6",
-    "file-loader": "^4.0.0",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^3.2.0",
     "ts-loader": "^6.0.4",
     "webpack": "^4.35.3",
     "webpack-async-chunk-names-plugin": "^0.1.1",
-    "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "^3.7.2",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^4.2.1"
   }
 }
