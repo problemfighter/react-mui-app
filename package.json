@@ -19,7 +19,7 @@
     "build-my-app": "lerna run build-my-app --stream"
   },
   "devDependencies": {
-    "lerna": "^3.15.0",
+    "lerna": "^4.0.0",
     "webpack-cli": "^3.3.6"
   }
 }

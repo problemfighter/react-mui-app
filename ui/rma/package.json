@@ -4,19 +4,19 @@
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.3",
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.4",
+    "@types/node": "^14.14.36",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "@types/react-select": "^3.0.8",
     "@types/recharts": "^1.8.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-mui-ui": "^0.1.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^4.0.3",
     "react-select": "^3.0.8",
     "recharts": "^1.8.5",
     "tm-react": "^0.1.0",
-    "typescript": "3.5.3"
+    "typescript": "4.2.3"
   },
   "scripts": {
     "start-rma": "webpack-dev-server",
