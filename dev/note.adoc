@@ -1,1 +1,4 @@
 npm install --save-dev webpack webpack-cli webpack-dev-server webpack-merge
+
+
+lerna clean --yes && yarn install && yarn start-my-app
