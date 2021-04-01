@@ -1,8 +1,7 @@
 {
   "packages": [
-    "dependency-source/*",
-    "ui/*",
-    "application/module/*/ui/*"
+    "ui-libraries/*",
+    "application/*/user-interface"
   ],
   "version": "0.0.0"
 }

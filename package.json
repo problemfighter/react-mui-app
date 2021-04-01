@@ -8,9 +8,8 @@
   "license": "Apache License 2.0",
   "private": true,
   "workspaces": [
-    "dependency-source/*",
-    "ui/*",
-    "application/module/*/ui/*"
+    "ui-libraries/*",
+    "application/*/user-interface"
   ],
   "scripts": {
     "start-rma": "lerna run start-rma --stream",
