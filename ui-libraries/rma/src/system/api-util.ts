@@ -15,14 +15,10 @@ export const ApiUtil = {
         return undefined
     },
 
-    search(event: any, component: any, searchKey: string[]) {
+    search(event: any, component: any) {
         if (event.keyCode === AppConstant.pressEnter) {
-            if (searchKey) {
-                let search: { [key: string]: any } = {};
-                searchKey.forEach((value) => {
-                    search[value] = "%" + event.target.value + "%";
-                });
-                component.state.queryCondition["search"] = search;
+            if (event.target.value) {
+                component.state.queryCondition["search"] = event.target.value;
             }
             if (component.loadData) {
                 component.loadData();
@@ -109,25 +105,15 @@ export const ApiUtil = {
             ApiUtil.showErrorMessageOnApiDataProcess(responseData, component);
         }
     },
-
-    sortAndPagination: (field: string, order: string) =>{
-        let sort: { [key: string]: any } = {};
-        if (field && order) {
-            sort =  {
-                order: {[field] : order}
-            };
-        }
-        return sort;
-    },
-    getSortAndPaginationData: (state: TRComponentState) => {
+    getSearchSortAndPaginationData: (state: TRComponentState) => {
         let sortAndPagination: { [key: string]: any } = {
-            offset: state.itemOffset,
-            max: state.maxItem,
-            where: ApiUtil.sortAndPagination(state.orderBy, state.sortDirection)
+            page: state.itemOffset,
+            'per-page': state.maxItem,
+            'sort-order': state.sortDirection,
+            'sort-field': state.orderBy
         };
-        if (state.queryCondition["search"]){
-            sortAndPagination["where"]["or"] = {};
-            sortAndPagination["where"]["or"]["like"] = state.queryCondition["search"]
+        if (state.queryCondition["search"]) {
+            sortAndPagination["search"] = state.queryCondition["search"];
         }
         return sortAndPagination;
     },
@@ -157,7 +143,7 @@ export const ApiUtil = {
                 },
                 nextPrevious(event: any, offset: number): void {
                     component.setState({
-                        itemOffset: component.state.maxItem * offset,
+                        itemOffset: offset,
                         pageOffset: offset
                     }, () => {
                         loadAgain();
