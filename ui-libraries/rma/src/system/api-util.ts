@@ -57,15 +57,15 @@ export const ApiUtil = {
         }
     },
 
-    processApiErrorResponse: (response: TRHTTResponse, component: any) =>{
+    processApiErrorResponse: (response: TRHTTResponse, component: any) => {
         if (response.status === AppConstant.STATUS_ERROR && response.error.message) {
-            component.showErrorFlash(response.error.message.text);
+            component.showErrorFlash(response.error.message);
         } else {
             let message = AppMessage.unableToCommunicate;
-            if (response.responseData.message.text){
-                let data = response.responseData.message.text;
-                if (typeof data === 'string' || data instanceof String){
-                    message = response.responseData.message.text;
+            if (response.responseData.message) {
+                let data = response.responseData.message;
+                if (typeof data === 'string' || data instanceof String) {
+                    message = response.responseData.message;
                 }
             }
             component.showErrorFlash(message);
@@ -86,7 +86,7 @@ export const ApiUtil = {
     processApiResponseAndShowError: (response: TRHTTResponse, component: any) => {
         let apiResponse = ApiUtil.processApiResponse(response, component);
         if (apiResponse.status === AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message) {
-            component.showErrorFlash(apiResponse.error.message.text);
+            component.showErrorFlash(apiResponse.error.message);
             return null;
         } else if (apiResponse.status === AppConstant.STATUS_ERROR && apiResponse.message) {
             component.showErrorFlash(apiResponse.message);
@@ -96,9 +96,8 @@ export const ApiUtil = {
         }
     },
     showErrorMessageOnApiDataProcess(responseData: any, component: any){
-        if (responseData && responseData.status == AppConstant.STATUS_ERROR &&
-            responseData.error && responseData.error.message) {
-            component.showErrorFlash(responseData.error.message.text)
+        if (responseData && responseData.status == AppConstant.STATUS_ERROR && responseData.message) {
+            component.showErrorFlash(responseData.message)
         }
     },
     processApiResponseError: (responseData: any, component: any) => {
