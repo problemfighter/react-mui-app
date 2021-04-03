@@ -52,32 +52,32 @@ class UserListView extends TRComponent<Props, UserListViewState> {
 
     public loadData(data: object = {}) {
         const _this = this;
-        this.postJsonToApi(UserUrlMapping.API.LIST, ApiUtil.getSortAndPaginationData(this.state),
-            {
-                callback(response: TRHTTResponse): void {
-                    let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
-                    let list = [];
-                    if (apiResponse && apiResponse.data) {
-                        list = apiResponse.data;
-                    }
-
-                    let totalItem = 0;
-                    if (apiResponse && apiResponse.pagination && apiResponse.pagination.total) {
-                        totalItem = apiResponse.pagination.total;
-                    }
-                    _this.setState({
-                        list: list,
-                        totalItem: totalItem,
-                        apiData: apiResponse
-                    });
-                }
-            },
-            {
-                callback(response: TRHTTResponse): void {
-                    ApiUtil.processApiErrorResponse(response, _this);
-                }
-            }
-        );
+        // this.postJsonToApi(UserUrlMapping.API.LIST, ApiUtil.getSortAndPaginationData(this.state),
+        //     {
+        //         callback(response: TRHTTResponse): void {
+        //             let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
+        //             let list = [];
+        //             if (apiResponse && apiResponse.data) {
+        //                 list = apiResponse.data;
+        //             }
+        //
+        //             let totalItem = 0;
+        //             if (apiResponse && apiResponse.pagination && apiResponse.pagination.total) {
+        //                 totalItem = apiResponse.pagination.total;
+        //             }
+        //             _this.setState({
+        //                 list: list,
+        //                 totalItem: totalItem,
+        //                 apiData: apiResponse
+        //             });
+        //         }
+        //     },
+        //     {
+        //         callback(response: TRHTTResponse): void {
+        //             ApiUtil.processApiErrorResponse(response, _this);
+        //         }
+        //     }
+        // );
     }
 
     tableActions(component: any, rowData: any): Map<string, TRTableActionData> {
@@ -121,7 +121,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                     </div>
                     <div>
                         <div className={classes.displayInline}>
-                            <TextField placeholder="search" name="search" onKeyUp={(event: any)=>{ApiUtil.search(event, _this, ["firstName", "lastName", "email"])}}/>
+                            {/*<TextField placeholder="search" name="search" onKeyUp={(event: any)=>{ApiUtil.search(event, _this, ["firstName", "lastName", "email"])}}/>*/}
                         </div>
                         <Button className={classes.marginToLeft}  variant="contained" color="primary" onClick={(event:any) => {TrUtil.gotoUrl(_this, "/user/registration")}}>Create</Button>
                         <Button className={classes.marginToLeft}  variant="contained" color="primary" onClick={(event:any) => {this.loadData()}} >Reload</Button>

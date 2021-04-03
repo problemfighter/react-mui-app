@@ -1,4 +1,3 @@
-import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import SystemConfig from "./system-config";
 import {AppConstant} from "./app-constant";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
@@ -15,20 +14,6 @@ export const ApiUtil = {
         }
         return undefined
     },
-
-    search(event: any, component: any) {
-        if (event.keyCode === AppConstant.pressEnter) {
-            if (event.target.value) {
-                component.state.queryCondition["search"] = event.target.value;
-            } else {
-                delete component.state.queryCondition["search"]
-            }
-            if (component.loadData) {
-                component.loadData();
-            }
-        }
-    },
-
     makeGetRequestUrl: (baseUrl: string, ...queryParams: Array<{key: string, value: string}>) => {
         let url = baseUrl;
 
@@ -109,8 +94,10 @@ export const ApiUtil = {
         }
     },
 
-    getSearchSortAndPaginationData: (state: TRComponentState, dataParams: TrLoadDataPrams = new TrLoadDataPrams()) => {
+    getSearchSortAndPaginationData: (parentState: any, dataParams: TrLoadDataPrams = new TrLoadDataPrams()) => {
+        let state = parentState.state;
         if (dataParams.isReset) {
+            ApiUtil.resetSearchAndPagination(parentState)
             return null
         }
         let sortAndPagination: { [key: string]: any } = {
@@ -119,8 +106,8 @@ export const ApiUtil = {
             'sort-order': state.sortDirection,
             'sort-field': state.orderBy
         };
-        if (state.queryCondition["search"]) {
-            sortAndPagination["search"] = state.queryCondition["search"];
+        if (state.search) {
+            sortAndPagination["search"] = state.search;
         }
         return sortAndPagination;
     },
@@ -130,6 +117,7 @@ export const ApiUtil = {
         component.state.pageOffset = 0;
         component.state.itemPerPage = SystemConfig.itemPerPage();
         component.state.itemOffset = 0;
+        component.setState({search: null})
     },
 
     paginationManager(component: any, loadAgain: any) {
