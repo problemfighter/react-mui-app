@@ -3,6 +3,7 @@ import SystemConfig from "./system-config";
 import {AppConstant} from "./app-constant";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {AppMessage} from "./app-message";
+import TrLoadDataPrams from "../../../tm-react/src/artifacts/component/tr-load-data-prams";
 
 
 export const ApiUtil = {
@@ -19,6 +20,8 @@ export const ApiUtil = {
         if (event.keyCode === AppConstant.pressEnter) {
             if (event.target.value) {
                 component.state.queryCondition["search"] = event.target.value;
+            } else {
+                delete component.state.queryCondition["search"]
             }
             if (component.loadData) {
                 component.loadData();
@@ -105,7 +108,11 @@ export const ApiUtil = {
             ApiUtil.showErrorMessageOnApiDataProcess(responseData, component);
         }
     },
-    getSearchSortAndPaginationData: (state: TRComponentState) => {
+
+    getSearchSortAndPaginationData: (state: TRComponentState, dataParams: TrLoadDataPrams = new TrLoadDataPrams()) => {
+        if (dataParams.isReset) {
+            return null
+        }
         let sortAndPagination: { [key: string]: any } = {
             page: state.itemOffset,
             'per-page': state.maxItem,
@@ -143,7 +150,7 @@ export const ApiUtil = {
                 },
                 nextPrevious(event: any, offset: number): void {
                     component.setState({
-                        itemOffset: offset,
+                        itemOffset: offset + 1,
                         pageOffset: offset
                     }, () => {
                         loadAgain();
