@@ -85,9 +85,8 @@ export const ApiUtil = {
         }
     },
     processApiResponseError: (responseData: any, component: any) => {
-        if (responseData && responseData.status == AppConstant.STATUS_ERROR &&
-            responseData.error && responseData.error.fields && responseData.error.fields.length !== 0) {
-            component.validateApiResponseData(responseData.error.fields);
+        if (responseData && responseData.status == AppConstant.STATUS_ERROR && responseData.error && responseData.error.length !== 0) {
+            component.validateApiResponseData(responseData.error);
             ApiUtil.showErrorMessageOnApiDataProcess(responseData, component);
         } else {
             ApiUtil.showErrorMessageOnApiDataProcess(responseData, component);

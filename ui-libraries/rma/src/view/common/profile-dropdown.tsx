@@ -34,7 +34,6 @@ export default class ProfileDropdown extends TRComponent<Props, State> {
             {
                 callback(response: TRHTTResponse): void {
                     const responseData = ApiUtil.getResponseData(response);
-                    console.log("Logout success");
                     TRBrowserStorageManager.clear();
                     TrUtil.gotoUrl(_this, "/");
                 }
