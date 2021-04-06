@@ -86,7 +86,7 @@ export default class ProfileDropdown extends TRComponent<Props, State> {
         return (
             <React.Fragment>
                 <ButtonGroup variant="contained" color="primary" style={{zIndex:1500}}>
-                    <Button>{TRBrowserStorageManager.getByKey("operatorName")}</Button>
+                    <Button style={{textTransform: 'none'}}>{TRBrowserStorageManager.getByKey("operatorName")}</Button>
                     <TRDropdown dropdownStyle={dropDownStyle} clickIcon={ExpandMoreIcon} actions={dropdownAction.getList()}/>
                 </ButtonGroup>
             </React.Fragment>
