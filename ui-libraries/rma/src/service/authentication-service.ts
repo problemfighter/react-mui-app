@@ -48,7 +48,7 @@ export default class AuthenticationService {
             let user = responseData.user;
             let name = user.firstName;
             if (user.lastName) {
-                name = " " + user.lastName
+                name += " " + user.lastName
             }
             TRBrowserStorageManager.add("operatorName", name);
             TRBrowserStorageManager.add("operatorId", user.id);
