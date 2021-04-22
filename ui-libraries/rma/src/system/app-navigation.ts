@@ -12,19 +12,37 @@ export default class AppNavigation {
         }
     }
 
-    public static getNavigation(route: any): Array<TRListData> {
-        let menuObj = TRBrowserStorageManager.getAsJSON("navList");
-        let nav: TRListDataHelper = TRListDataHelper.start("dashboard", "Dashboard", "dashboard", this.setAction(route, "/dashboard"));
+    private static populateObjectToNav(navList: any, nav: TRListDataHelper, route: any, nested: boolean = false) {
         let _this = this;
-        if (menuObj){
-            menuObj.forEach(function (value: any) {
-                if (value.url !== ""){
-                    nav.add(value.name, value.displayName, value.icon, _this.setAction(route, value.url));
-                }else{
-                    nav.add(value.name, value.displayName, value.icon);
+        if (navList) {
+            navList.forEach(function (value: any) {
+                if (nested) {
+                    if (value.url !== "") {
+                        nav.addChild(value.name, value.displayName, value.icon, _this.setAction(route, value.url));
+                    } else {
+                        nav.addChild(value.name, value.displayName, value.icon);
+                    }
+                } else {
+                    if (value.url !== "") {
+                        nav.add(value.name, value.displayName, value.icon, _this.setAction(route, value.url));
+                    } else {
+                        nav.add(value.name, value.displayName, value.icon);
+                    }
+                }
+                if (value.nested) {
+                    _this.populateObjectToNav(value.nested, nav, route, true)
+                    nav.addToParent()
                 }
             });
         }
+        return nav;
+    }
+
+    public static getNavigation(route: any): Array<TRListData> {
+        let menuObj = TRBrowserStorageManager.getAsJSON("navList");
+        let nav: TRListDataHelper = TRListDataHelper.start("dashboard", "Dashboard", "dashboard", this.setAction(route, "/dashboard"));
+        this.populateObjectToNav(menuObj, nav, route)
+        console.log(nav)
         return nav.getList();
     }
 }
