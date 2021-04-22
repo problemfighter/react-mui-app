@@ -42,7 +42,6 @@ export default class AppNavigation {
         let menuObj = TRBrowserStorageManager.getAsJSON("navList");
         let nav: TRListDataHelper = TRListDataHelper.start("dashboard", "Dashboard", "dashboard", this.setAction(route, "/dashboard"));
         this.populateObjectToNav(menuObj, nav, route)
-        console.log(nav)
         return nav.getList();
     }
 }
