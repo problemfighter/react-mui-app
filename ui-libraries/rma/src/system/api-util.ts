@@ -42,11 +42,13 @@ export const ApiUtil = {
     },
 
     processApiErrorResponse: (response: TRHTTResponse, component: any) => {
-        if (response.status === AppConstant.STATUS_ERROR && response.error.message) {
+        if (!response) {
+            component.showErrorFlash("Opps! something went wrong.");
+        } else if (response && response.status === AppConstant.STATUS_ERROR && response.error.message) {
             component.showErrorFlash(response.error.message);
         } else {
             let message = AppMessage.unableToCommunicate;
-            if (response.responseData.message) {
+            if (response.responseData && response.responseData.message) {
                 let data = response.responseData.message;
                 if (typeof data === 'string' || data instanceof String) {
                     message = response.responseData.message;
