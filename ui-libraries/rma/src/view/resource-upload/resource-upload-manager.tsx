@@ -8,9 +8,10 @@ import {
     CardContent,
     CardHeader, CardMedia, CloudUploadIcon, DeleteIcon,
     Divider, EditIcon,
-    Grid, IconButton, PhotoCameraIcon, TextField
+    Grid, IconButton, LinearProgress
 } from "react-mui-ui/ui/ui-component";
 import React from "react";
+import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 
 
 interface Props extends TRProps {
@@ -18,10 +19,14 @@ interface Props extends TRProps {
     title?: string
     uploadButtonLabel?: string
     inputName?: string
-    gridSize?: bigint
+    gridSize?: bigint,
+    uploadParams?: any,
+    uploadUrl: string,
 }
 
-class State extends TRComponentState{}
+class State extends TRComponentState {
+    isProcessing: any = []
+}
 
 export default class ResourceUploadManager extends TRComponent<Props, State> {
 
@@ -72,8 +77,15 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
 
     deleteUploadedPreview(event: any, index: any) {
         let data = this.getValueFromFormData(this.getInputName())
-        if (data && data instanceof Array && data.length !== 0 && data[0] instanceof File) {
-            data.splice(index, 1);
+        if (data && data instanceof Array && data.some((item: any) => item instanceof File)) {
+            delete data[index];
+            let count = 0;
+            data.forEach((file: any, index: any) => {
+                count++;
+            })
+            if (count === 0) {
+                data = ""
+            }
             this.setValueToFormData(this.getInputName(), data)
         }
     }
@@ -85,11 +97,12 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
                     <CardActionArea>
                         <CardMedia
                             component="img"
-                            height="200"
-                            width="200"
+                            height="100"
+                            width="100"
                             image={URL.createObjectURL(file)}
                         />
                     </CardActionArea>
+                    {this.state.isProcessing[index] ? <LinearProgress /> : ""}
                     <Box textAlign="center">
                         <IconButton color="secondary" component="span" title="Delete the resources" onClick={(event: any) => {this.deleteUploadedPreview(event, index)}}>
                             <DeleteIcon/>
@@ -119,20 +132,63 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
         return ""
     }
 
+    uploadFile(data: any, index: any) {
+        const {uploadUrl} = this.props
+        let _this = this;
+        let progress = _this.state.isProcessing
+        progress[index] = true
+        _this.setState({
+            isProcessing: progress
+        })
+        this.postFileToApi(uploadUrl, data,
+            {
+                callback(response: TRHTTResponse): void {
+                    _this.deleteUploadedPreview(undefined, index)
+                    delete _this.state.isProcessing[index]
+                }
+            },
+            {
+                callback(response: TRHTTResponse): void {
+                    console.log("Error")
+                    console.log(response)
+                }
+            }
+        )
+    }
+
+    startUpload() {
+        let _this = this;
+        let name = this.getInputName()
+        let files = this.state.formData[name]
+        let {uploadParams} = this.props
+        if (!uploadParams) {
+            uploadParams = {}
+        }
+        if (files) {
+            files.forEach((file: any, index: any) => {
+                uploadParams.name = file
+                _this.uploadFile(uploadParams, index)
+            })
+        }
+    }
+
     renderUI() {
         let _this = this;
-        let {title, uploadButtonLabel, inputName} = this.props
-        inputName = _this.getInputName()
+        let {title, uploadButtonLabel} = this.props
+        let inputName = _this.getInputName()
         return (
             <React.Fragment>
                 <Grid container spacing={1} justify="space-between" alignItems="center">
                     <Grid item xs={6}>
                         <CardHeader title={title}/>
                     </Grid>
-                    <Grid item xs={1} >
+                    <Grid item xs={2} >
                         <Button color="primary" variant="contained" component="label">
                             {uploadButtonLabel}
-                            <input type={inputName} multiple hidden {...this.handleInputDataChange(inputName)} />
+                            <input type="file" multiple hidden {...this.handleInputDataChange(inputName)} />
+                        </Button>
+                        <Button color="primary" variant="contained" component="label" onClick={(event: any) => {_this.startUpload()}}>
+                            Process
                         </Button>
                     </Grid>
                 </Grid>
