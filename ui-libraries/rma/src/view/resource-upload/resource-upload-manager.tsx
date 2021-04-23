@@ -8,10 +8,14 @@ import {
     CardContent,
     CardHeader, CardMedia, CloudUploadIcon, DeleteIcon,
     Divider, EditIcon,
-    Grid, IconButton, LinearProgress
+    Grid, IconButton, LinearProgress, TableCell, TableRow
 } from "react-mui-ui/ui/ui-component";
 import React from "react";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
+import {ApiUtil} from "../../system/api-util";
+import {AppConstant} from "../../system/app-constant";
+import SupplierConfig from "supplier/src/view/supplier/supplier-config";
+
 
 
 interface Props extends TRProps {
@@ -19,13 +23,16 @@ interface Props extends TRProps {
     title?: string
     uploadButtonLabel?: string
     inputName?: string
-    gridSize?: bigint,
+    gridSize?: any,
     uploadParams?: any,
     uploadUrl: string,
+    listUrl: string,
+    deleteUrl: string,
 }
 
 class State extends TRComponentState {
     isProcessing: any = []
+    list: any = [];
 }
 
 export default class ResourceUploadManager extends TRComponent<Props, State> {
@@ -33,7 +40,7 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
     static defaultProps = {
         title: "Resources",
         uploadButtonLabel: "Upload",
-        gridSize: 3,
+        gridSize: 2,
         inputName: "file",
     };
 
@@ -44,10 +51,10 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
     }
 
     componentDidMount() {
-
+        this.loadData()
     }
 
-    loadThumb(file: File, index: any) {
+    loadThumbX(file: File, index: any) {
         return (
             <Grid item xs={3} key={index}>
                 <Card>
@@ -92,7 +99,7 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
 
     getUploadPreviewView(file: File, index: any) {
         return (
-            <Grid item xs={3} key={index}>
+            <Grid item xs={this.props.gridSize} key={index}>
                 <Card>
                     <CardActionArea>
                         <CardMedia
@@ -105,6 +112,32 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
                     {this.state.isProcessing[index] ? <LinearProgress /> : ""}
                     <Box textAlign="center">
                         <IconButton color="secondary" component="span" title="Delete the resources" onClick={(event: any) => {this.deleteUploadedPreview(event, index)}}>
+                            <DeleteIcon/>
+                        </IconButton>
+                    </Box>
+                </Card>
+            </Grid>
+        )
+    }
+
+    loadThumb(row: any, index: any) {
+        let url = ""
+        return (
+            <Grid item xs={this.props.gridSize} key={index}>
+                <Card>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            height="100"
+                            width="100"
+                            image={url}
+                        />
+                    </CardActionArea>
+                    <Box textAlign="center">
+                        <IconButton color="secondary" component="span" title="Delete the resources"
+                                    onClick={(event: any) => {
+                                        this.delete(row.id)
+                                    }}>
                             <DeleteIcon/>
                         </IconButton>
                     </Box>
@@ -145,6 +178,7 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
                 callback(response: TRHTTResponse): void {
                     _this.deleteUploadedPreview(undefined, index)
                     delete _this.state.isProcessing[index]
+                    _this.loadData()
                 }
             },
             {
@@ -172,6 +206,51 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
         }
     }
 
+    delete(id: any) {
+        let _this = this;
+        this.deleteToApi(_this.props.deleteUrl + id,
+            {
+                callback(response: TRHTTResponse): void {
+                    let apiResponse = ApiUtil.processApiResponse(response, _this);
+                    if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS) {
+                        _this.showSuccessFlash(SupplierConfig.NAME_CONSTANT.DELETE_SUCCESS_MESSAGE);
+                        _this.loadData();
+                    } else {
+                        ApiUtil.processApiResponseError(apiResponse, _this);
+                    }
+                }
+            },
+            {
+                callback(response: TRHTTResponse): void {
+                    ApiUtil.processApiErrorResponse(response, _this);
+                }
+            }
+        );
+    }
+
+    public loadData() {
+        const _this = this;
+        this.getToApi(this.props.listUrl,
+            {
+                callback(response: TRHTTResponse): void {
+                    let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
+                    let list = [];
+                    if (apiResponse && apiResponse.data) {
+                        list = apiResponse.data;
+                    }
+                    _this.setState({
+                        list: list
+                    });
+                }
+            },
+            {
+                callback(response: TRHTTResponse): void {
+                    ApiUtil.processApiErrorResponse(response, _this);
+                }
+            }
+        );
+    }
+
     renderUI() {
         let _this = this;
         let {title, uploadButtonLabel} = this.props
@@ -194,8 +273,9 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
                 </Grid>
                 <Divider/>
                 <CardContent>
-                    <Grid  container spacing={4}>
-                        { _this.loadPreview(this.state.formData[inputName])}
+                    <Grid container spacing={4}>
+                        {_this.loadPreview(this.state.formData[inputName])}
+                        {_this.state.list.map((row: any, index: any) => _this.loadThumb(row, index))}
                     </Grid>
                 </CardContent>
                 <CardActions>
