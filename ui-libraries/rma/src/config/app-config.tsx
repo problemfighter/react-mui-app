@@ -25,6 +25,10 @@ export default class AppConfig extends TRAppConfig {
         return "http://localhost:3000/";
     }
 
+    public getStaticBaseURL(): string {
+        return "static/";
+    }
+
     public isAuthorized (response?: TRHTTResponse): boolean {
         if (response && response.httpCode === 401){
             return false

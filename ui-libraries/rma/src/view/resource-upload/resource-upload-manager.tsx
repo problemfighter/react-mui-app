@@ -8,7 +8,7 @@ import {
     CardContent,
     CardHeader, CardMedia, CloudUploadIcon, DeleteIcon,
     Divider, EditIcon,
-    Grid, IconButton, LinearProgress, TableCell, TableRow
+    Grid, IconButton, LinearProgress, SaveIcon, TableCell, TableRow, Typography
 } from "react-mui-ui/ui/ui-component";
 import React from "react";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
@@ -28,6 +28,7 @@ interface Props extends TRProps {
     uploadUrl: string,
     listUrl: string,
     deleteUrl: string,
+    imgSrcMiddleUrl: string,
 }
 
 class State extends TRComponentState {
@@ -121,7 +122,7 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
     }
 
     loadThumb(row: any, index: any) {
-        let url = ""
+        let url = window.appConfig.getBaseURL() + this.props.imgSrcMiddleUrl + row.id + "/" + row.name
         return (
             <Grid item xs={this.props.gridSize} key={index}>
                 <Card>
@@ -253,38 +254,37 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
 
     renderUI() {
         let _this = this;
-        let {title, uploadButtonLabel} = this.props
+        let {title} = this.props
         let inputName = _this.getInputName()
         return (
             <React.Fragment>
                 <Grid container spacing={1} justify="space-between" alignItems="center">
                     <Grid item xs={6}>
-                        <CardHeader title={title}/>
+                        <Typography variant="subtitle1">
+                            <Box>{title}</Box>
+                        </Typography>
                     </Grid>
                     <Grid item xs={2} >
-                        <Button color="primary" variant="contained" component="label">
-                            {uploadButtonLabel}
+                        <IconButton color="primary" component="label" title="Upload resources">
+                            <CloudUploadIcon/>
                             <input type="file" multiple hidden {...this.handleInputDataChange(inputName)} />
-                        </Button>
-                        <Button color="primary" variant="contained" component="label" onClick={(event: any) => {_this.startUpload()}}>
-                            Process
-                        </Button>
+                        </IconButton>
+                        {
+                            _this.state.formData[inputName] && _this.state.formData[inputName] !== "" ? (
+                                <IconButton color="primary" component="span" title="Upload resources"
+                                            onClick={(event: any) => { _this.startUpload() }}>
+                                    <SaveIcon/>
+                                </IconButton>
+                            ) : ""
+                        }
                     </Grid>
                 </Grid>
                 <Divider/>
-                <CardContent>
-                    <Grid container spacing={4}>
-                        {_this.loadPreview(this.state.formData[inputName])}
-                        {_this.state.list.map((row: any, index: any) => _this.loadThumb(row, index))}
-                    </Grid>
-                </CardContent>
-                <CardActions>
-                    <Grid container spacing={1} justify="flex-end">
-                        <Grid item xs={1}>
-                            <Button color="secondary" size="small" fullWidth variant="contained" children="close"/>
-                        </Grid>
-                    </Grid>
-                </CardActions>
+                <br/>
+                <Grid container spacing={4}>
+                    {_this.loadPreview(this.state.formData[inputName])}
+                    {_this.state.list.map((row: any, index: any) => _this.loadThumb(row, index))}
+                </Grid>
             </React.Fragment>
         )
     }
