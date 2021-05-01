@@ -2,19 +2,14 @@ import TRComponent from "tm-react/src/artifacts/component/tr-component";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import {
-    Box,
-    Button, Card, CardActionArea,
-    CardActions,
-    CardContent,
-    CardHeader, CardMedia, CloudUploadIcon, DeleteIcon,
+    Box, Card, CardActionArea, CardMedia, CloudUploadIcon, DeleteIcon,
     Divider, EditIcon,
-    Grid, IconButton, LinearProgress, SaveIcon, TableCell, TableRow, Typography
+    Grid, IconButton, LinearProgress, SaveIcon, Typography
 } from "react-mui-ui/ui/ui-component";
 import React from "react";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {ApiUtil} from "../../system/api-util";
 import {AppConstant} from "../../system/app-constant";
-import SupplierConfig from "supplier/src/view/supplier/supplier-config";
 
 
 
@@ -214,7 +209,7 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
                 callback(response: TRHTTResponse): void {
                     let apiResponse = ApiUtil.processApiResponse(response, _this);
                     if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS) {
-                        _this.showSuccessFlash(SupplierConfig.NAME_CONSTANT.DELETE_SUCCESS_MESSAGE);
+                        _this.showSuccessFlash("Successfully Deleted");
                         _this.loadData();
                     } else {
                         ApiUtil.processApiResponseError(apiResponse, _this);
