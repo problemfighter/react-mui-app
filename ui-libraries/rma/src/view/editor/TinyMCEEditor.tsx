@@ -17,6 +17,7 @@ interface Props extends TRProps {
     disableToolbar?: boolean;
 }
 
+
 class State extends TRComponentState {}
 export default class TinyMCEEditor extends TRComponent<Props, State> {
 
