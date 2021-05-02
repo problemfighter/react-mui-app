@@ -56,6 +56,7 @@ export default class TinyMCEEditor extends TRComponent<Props, State> {
             this.props.onSave()
             return false
         }
+        console.log("Pressss ")
     }
 
 
