@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@tinymce/tinymce-react": "^3.12.3",
     "@types/jest": "^24.0.15",
     "@types/node": "^14.14.36",
     "@types/react": "^17.0.3",
