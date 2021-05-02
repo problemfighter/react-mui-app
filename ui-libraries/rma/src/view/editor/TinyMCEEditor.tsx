@@ -56,7 +56,6 @@ export default class TinyMCEEditor extends TRComponent<Props, State> {
             this.props.onSave()
             return false
         }
-        console.log("Pressss ")
     }
 
 
@@ -71,7 +70,6 @@ export default class TinyMCEEditor extends TRComponent<Props, State> {
                 </Box>
                 <Editor
                     onKeyDown={ (event: any) => { return _this.onSaveAction(event)}}
-                    onKeyPress={ (event: any) => { return _this.onSaveAction(event)}}
                     toolbar={toolbar}
                     value={value}
                     apiKey={apiKey}
