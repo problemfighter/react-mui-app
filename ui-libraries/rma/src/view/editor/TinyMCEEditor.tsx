@@ -10,6 +10,7 @@ interface Props extends TRProps {
     value?: any;
     label?: any;
     onChange?: any;
+    onSave?: any;
     name?: any;
     apiKey: any;
     height?: number;
@@ -50,6 +51,13 @@ export default class TinyMCEEditor extends TRComponent<Props, State> {
         }
     }
 
+    onSaveAction(event: any) {
+        if (event.which === 83 && event.ctrlKey && this.props.onSave) {
+            this.props.onSave()
+            return false
+        }
+    }
+
 
     renderUI() {
         let _this = this;
@@ -61,6 +69,7 @@ export default class TinyMCEEditor extends TRComponent<Props, State> {
                     <Typography>{label}</Typography>
                 </Box>
                 <Editor
+                    onKeyDown={ (event: any) => { return _this.onSaveAction(event)}}
                     toolbar={toolbar}
                     value={value}
                     apiKey={apiKey}
