@@ -10,7 +10,8 @@ import React from "react";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {ApiUtil} from "../../system/api-util";
 import {AppConstant} from "../../system/app-constant";
-
+import TRDialog, {DialogMaxWidth} from "../../../../react-mui-ui/ui/tr-dialog";
+import ResourceEditView from "./resource-edit-view";
 
 
 interface Props extends TRProps {
@@ -19,16 +20,25 @@ interface Props extends TRProps {
     uploadButtonLabel?: string
     inputName?: string
     gridSize?: any,
-    uploadParams?: any,
-    uploadUrl: string,
-    listUrl: string,
-    deleteUrl: string,
-    imgSrcMiddleUrl: string,
+    uploadParams?: any
+    uploadUrl: string
+    listUrl: string
+    deleteUrl: string
+    imgSrcMiddleUrl: string
+
+    enableEdit?: boolean;
+    updateTitle?: any;
+    updateButtonLabel?: any
+    updateURL?: string
+    detailsURL?: string
 }
 
 class State extends TRComponentState {
     isProcessing: any = []
     list: any = [];
+    isOpenEditPopup: boolean = false
+    updateURL: any
+    detailsURL: any
 }
 
 export default class ResourceUploadManager extends TRComponent<Props, State> {
@@ -124,6 +134,7 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
     }
 
     loadThumb(row: any, index: any) {
+        let _this = this
         let url = window.appConfig.getBaseURL() + this.props.imgSrcMiddleUrl + row.id + "/" + row.name
         return (
             <Grid item xs={this.props.gridSize} key={index}>
@@ -138,6 +149,18 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
                     </CardActionArea>
                     {this.getTitle(row)}
                     <Box textAlign="center">
+                        {_this.props.enableEdit ? (
+                            <IconButton color="secondary" component="span" title="Update meta information"
+                                    onClick={(event: any) => {
+                                        _this.setState({
+                                            updateURL: _this.props.updateURL,
+                                            detailsURL: _this.props.detailsURL + row.id
+                                        })
+                                        _this.openCloseUpdateDialog()
+                                    }}>
+                            <EditIcon/>
+                        </IconButton>
+                        ) : ""}
                         <IconButton color="secondary" component="span" title="Delete the resources"
                                     onClick={(event: any) => {
                                         this.delete(row.id)
@@ -255,12 +278,29 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
         );
     }
 
+    openCloseUpdateDialog(isOpen = true) {
+        this.setState({isOpenEditPopup: isOpen})
+    }
+
     renderUI() {
         let _this = this;
         let {title} = this.props
         let inputName = _this.getInputName()
         return (
             <React.Fragment>
+                <TRDialog
+                    isOpen={_this.state.isOpenEditPopup} maxWidth={DialogMaxWidth.LARGE}
+                    children={
+                        <ResourceEditView
+                            route={_this.props.route}
+                            title={_this.props.updateTitle}
+                            updateButtonLabel={_this.props.uploadButtonLabel}
+                            updateURL={_this.state.updateURL}
+                            detailsURL={_this.state.detailsURL}
+                            onClose={() => {_this.openCloseUpdateDialog(false)}}
+                            parentComponent={_this}
+                          />}
+                />
                 <Grid container spacing={1} justify="space-between" alignItems="center">
                     <Grid item xs={6}>
                         <Typography variant="subtitle1">
