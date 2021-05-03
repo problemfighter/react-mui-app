@@ -116,6 +116,13 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
         )
     }
 
+    getTitle(row: any){
+        if (row && row.title){
+            return <Box textAlign="center" p={1}><Typography>{row.title}</Typography></Box>
+        }
+        return ""
+    }
+
     loadThumb(row: any, index: any) {
         let url = window.appConfig.getBaseURL() + this.props.imgSrcMiddleUrl + row.id + "/" + row.name
         return (
@@ -129,6 +136,7 @@ export default class ResourceUploadManager extends TRComponent<Props, State> {
                             image={url}
                         />
                     </CardActionArea>
+                    {this.getTitle(row)}
                     <Box textAlign="center">
                         <IconButton color="secondary" component="span" title="Delete the resources"
                                     onClick={(event: any) => {
