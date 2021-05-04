@@ -24,7 +24,7 @@ export default class TinyMCEEditor extends TRComponent<Props, State> {
 
     state: State = new State();
     plugins: any = ['autoresize', 'print', 'media', 'emoticons', 'autolink', 'anchor', 'preview', 'image imagetools' , 'advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'table', 'textcolor', 'insertdatetime media table paste code help wordcount']
-    toolbarActions: string = 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons | table | image media | | forecolor backcolor removeformat | anchor | preview | print'
+    toolbarActions: string = 'undo redo | formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons | table | image media | removeformat | anchor | preview | print'
 
     static defaultProps = {
         enableMenubar: false,
