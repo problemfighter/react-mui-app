@@ -97,20 +97,22 @@ export const ApiUtil = {
 
     getSearchSortAndPaginationData: (parentState: any, dataParams: TrLoadDataPrams = new TrLoadDataPrams()) => {
         let state = parentState.state;
+        let queryParams: { [key: string]: any } = {}
+        if (dataParams.params) {
+            queryParams = dataParams.params
+        }
         if (dataParams.isReset) {
             ApiUtil.resetSearchAndPagination(parentState)
-            return null
+            return queryParams
         }
-        let sortAndPagination: { [key: string]: any } = {
-            page: state.itemOffset,
-            'per-page': state.maxItem,
-            'sort-order': state.sortDirection,
-            'sort-field': state.orderBy
-        };
+        queryParams['page'] = state.itemOffset;
+        queryParams['per-page'] = state.maxItem;
+        queryParams['sort-order'] = state.sortDirection;
+        queryParams['sort-field'] = state.orderBy;
         if (state.search) {
-            sortAndPagination["search"] = state.search;
+            queryParams["search"] = state.search;
         }
-        return sortAndPagination;
+        return queryParams;
     },
 
     resetSearchAndPagination: (component: any) => {
