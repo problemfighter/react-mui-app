@@ -15,7 +15,7 @@ git clone https://github.com/problemfighter/react-mui-app.git
 
 echo "Preparing Development Source Dependency"
 cd "$PROJECT_NAME"
-DS="dependency-source"
+DS="ui-libraries"
 mkdir -p "$DS"
 cd "$DS"
 
